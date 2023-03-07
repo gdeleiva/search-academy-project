@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @RestController
 public class HelloWorldController {
@@ -27,19 +28,14 @@ public class HelloWorldController {
         return "Hello " + name;
     }
 
-    @GetMapping("/")
-    public String test() throws IOException {
-        String name = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT).getClusterName();
-        String json = "{ \"query\": \"ejemplo\", \"clusterName\": " + name + " }";
-        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        return json;
-    }
+
 
     @GetMapping("/search/{query}")
-    public JsonObject json(@PathVariable String query) throws IOException {
+    public HashMap<String, String> json(@PathVariable String query) throws IOException {
         String name = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT).getClusterName();
-        String json = "{ \"query\": \"" +query+"\", \"clusterName\": " + name + " }";
-        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        return jsonObject;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("query", query);
+        map.put("clusterName", name);
+        return map;
     }
 }

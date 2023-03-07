@@ -42,8 +42,6 @@ public class HelloWorldControllerTest {
     @Test
     public void givenJsonString_whenJavaObject_thenIndexDocument() throws Exception {
         String name = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT).getClusterName();
-        String json = "{ \"query\": \"ejemplo\", \"clusterName\": " + name + " }";
-        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
 
         mvc.perform(MockMvcRequestBuilders.get("/search/{query}","ejemplo"));
     }
