@@ -21,7 +21,7 @@ public class Config {
     // Spring will handle wiring bean dependencies for us
     // In this case it will retrieve the SearchEngineClient from the context and pass it to our SearchService
     @Bean
-    public SearchService searchService(SearchEngineClient searchEngine) {
-        return new SearchServiceImpl(searchEngine);
+    public SearchService searchService() {
+        return new SearchServiceImpl();
     }
 }

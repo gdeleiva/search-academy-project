@@ -1,9 +1,10 @@
 package com.example.academysession1.service.client;
 
+import org.elasticsearch.client.RestHighLevelClient;
+
 import java.io.IOException;
-import java.util.HashMap;
 
 public interface SearchEngineClient {
 
-    HashMap<String, String> getClient(String query) throws IOException;
+    RestHighLevelClient getElasticClient() throws IOException;
 }
