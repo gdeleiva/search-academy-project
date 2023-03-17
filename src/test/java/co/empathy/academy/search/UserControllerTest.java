@@ -47,7 +47,7 @@ class UserControllerTest {
     }
 
     @ Test
-    public void whenGetUsers_thenStatus200() throws Exception {
+    public void testGetUsersList() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/list")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -55,7 +55,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void givenUser_whenGetUserById_thenReturnUser() throws Exception {
+    public void testFindUserThatExists() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/get/{id}", test.getId().intValue())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -65,14 +65,14 @@ class UserControllerTest {
     }
 
     @Test
-    public void givenFailUser_WhenGetUser_thenStatus404() throws Exception {
+    public void testFindUserThatDoesNotExist() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", 23)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(404));
     }
 
     @Test
-    public void givenNewUser_WhenCreateUser_thenStatus201() throws Exception {
+    public void testAddNewUser() throws Exception {
         User newUser = new User(100L,"nuevo", "nuevo","nuevo");
         mockMvc.perform(MockMvcRequestBuilders.post("/user/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ class UserControllerTest {
                 .andExpect(status().is(201));
     }
     @Test
-    public void givenExistingUser_WhenCreateUser_thenStatus400() throws Exception {
+    public void testAddAlreadyExistingUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/user/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(test)))
@@ -88,7 +88,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void givenNewName_WhenModifyUser_thenStatus204_thenUserIsModified() throws Exception {
+    public void testEditUser() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/user/edit/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +98,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void givenUserId_WhenDelete_ThenStatus204() throws Exception {
+    public void testDeleteUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(204));
