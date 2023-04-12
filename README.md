@@ -8,14 +8,17 @@ https://github.com/gdeleiva/search-academy-project.git
 ```
 cd search-academy-project
 ```
-3. Build and deploy the application with docker, make sure docker is running in your machine
+3. Build and deploy the application with docker using the following comand:
 ```
 docker compose up --build -d
 ```
-If you want to stop the application, sometimes elastic search wont stop and you will have to stop it from the docker app
+(make sure docker is running in your machine)
+
+If you want to stop the application use the following command:
 ```
 docker compose down
 ```
+Sometimes elastic search wont stop and you will have to stop it from the docker app.
 
 ## Documentation
 Once the system is deployed, you can find all the API documentation here, there is also the javadoc documentation:
