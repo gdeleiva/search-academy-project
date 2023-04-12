@@ -28,7 +28,7 @@ With the system deployed, you can check the status of asynchronous jobs, such as
 ```
 http://localhost:8000/dashboard/overview
 ```
-Besides, you can check indexing progress connecting to localhost:9000 suing cerebro:
+Besides, you can check indexing progress connecting to localhost:9000 using cerebro:
 ```
 http://localhost:9000
 ```
