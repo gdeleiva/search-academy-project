@@ -1,11 +1,11 @@
 package co.empathy.academy.search.imdb.model.title;
 
 import co.empathy.academy.search.imdb.model.Title;
-
 public class Crew implements Title {
-    private String tconst;
-    private String[] directors;
-    private String[] writers;
+    // Contains the director and writer information for all the titles in IMDb. Fields include:
+    private String tconst; // tconst (string) - alphanumeric unique identifier of the title
+    private String[] directors; // directors (array of nconsts) - director(s) of the given title
+    private String[] writers; // writers (array of nconsts) – writer(s) of the given titlevv
 
     public Crew(String tconst, String[] directors, String[] writers) {
         this.tconst = tconst;

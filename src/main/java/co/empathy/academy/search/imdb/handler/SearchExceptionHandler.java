@@ -1,7 +1,8 @@
-package co.empathy.academy.search.handler;
+package co.empathy.academy.search.imdb.handler;
 
-import co.empathy.academy.search.exception.UserAlreadyExistsException;
-import co.empathy.academy.search.exception.UserNotFoundException;
+import co.empathy.academy.search.imdb.exception.FileReadingException;
+import co.empathy.academy.search.imdb.exception.UserAlreadyExistsException;
+import co.empathy.academy.search.imdb.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,10 @@ public class SearchExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<?> handleFileError(Exception ex, WebRequest request) {
         String body = "Failed to upload file";
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+    @ExceptionHandler(FileReadingException.class)
+    protected ResponseEntity<Object> handleInvalidFileData(FileReadingException ex, WebRequest request) {
+        String body = "Failed to upload file";
+        return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

@@ -3,10 +3,11 @@ package co.empathy.academy.search.imdb.model.title;
 import co.empathy.academy.search.imdb.model.Title;
 
 public class Episode implements Title {
-    private String tconst;
-    private String parentTconst;
-    private int seasonNumber;
-    private int episodeNumber;
+    // Contains the tv episode information. Fields include:
+    private String tconst; // tconst (string) - alphanumeric identifier of episode
+    private String parentTconst; // parentTconst (string) - alphanumeric identifier of the parent TV Series
+    private int seasonNumber; // seasonNumber (integer) – season number the episode belongs to
+    private int episodeNumber; // episodeNumber (integer) – episode number of the tconst in the TV series
 
     public Episode(String tconst, String parentTconst, int seasonNumber, int episodeNumber) {
         this.tconst = tconst;

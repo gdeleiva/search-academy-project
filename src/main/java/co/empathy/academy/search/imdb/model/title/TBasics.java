@@ -3,15 +3,17 @@ package co.empathy.academy.search.imdb.model.title;
 import co.empathy.academy.search.imdb.model.Title;
 
 public class TBasics implements Title {
-    private String tconst;
-    private String titleType;
-    private String primaryTitle;
-    private String originalTitle;
-    private boolean isAdult;
-    private int startYear;
-    private int endYear;
-    private int runtimeMinutes;
-    private String[] genres;
+    // Contains the following information for titles:
+
+    private String tconst; // tconst (string) - alphanumeric unique identifier of the title
+    private String titleType; // titleType (string) – the type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc)
+    private String primaryTitle; //     primaryTitle (string) – the more popular title / the title used by the filmmakers on promotional materials at the point of release
+    private String originalTitle; // originalTitle (string) - original title, in the original language
+    private boolean isAdult; // isAdult (boolean) - 0: non-adult title; 1: adult title
+    private int startYear; // startYear (YYYY) – represents the release year of a title. In the case of TV Series, it is the series start year
+    private int endYear; // endYear (YYYY) – TV Series end year. ‘\N’ for all other title types
+    private int runtimeMinutes; // runtimeMinutes – primary runtime of the title, in minutes
+    private String[] genres; // genres (string array) – includes up to three genres associated with the title
 
     public TBasics(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult, int startYear, int endYear, int runtimeMinutes, String[] genres) {
         this.tconst = tconst;

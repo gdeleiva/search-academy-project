@@ -1,4 +1,4 @@
-package co.empathy.academy.search.exception;
+package co.empathy.academy.search.imdb.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

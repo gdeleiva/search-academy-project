@@ -3,11 +3,12 @@ package co.empathy.academy.search.imdb.model.title;
 import co.empathy.academy.search.imdb.model.Title;
 
 public class Rating implements Title {
-    private String tconst;
-    private Double averageRating;
-    private int numVotes;
+    // Contains the IMDb rating and votes information for titles:
+    private String tconst; // tconst (string) - alphanumeric unique identifier of the title
+    private float averageRating; // averageRating – weighted average of all the individual user ratings
+    private int numVotes; // numVotes - number of votes the title has received
 
-    public Rating(String tconst, Double averageRating, int numVotes) {
+    public Rating(String tconst, float averageRating, int numVotes) {
         this.tconst = tconst;
         this.averageRating = averageRating;
         this.numVotes = numVotes;
@@ -21,11 +22,11 @@ public class Rating implements Title {
         this.tconst = tconst;
     }
 
-    public Double getAverageRating() {
+    public float getAverageRating() {
         return averageRating;
     }
 
-    public void setAverageRating(Double averageRating) {
+    public void setAverageRating(float averageRating) {
         this.averageRating = averageRating;
     }
 

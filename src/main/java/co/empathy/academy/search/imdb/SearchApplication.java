@@ -1,4 +1,4 @@
-package co.empathy.academy.search;
+package co.empathy.academy.search.imdb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
