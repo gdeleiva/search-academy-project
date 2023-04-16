@@ -24,4 +24,14 @@ public class ElasticServiceImpl implements ElasticService{
     public void indexIMDbDocs(List<Movie> movies, String indexName) throws IOException {
         elasticRequest.bulkIndexMovies(movies, indexName);
     }
+
+    @Override
+    public void mapIndex(String name) throws IOException {
+        elasticRequest.mapIndex(name);
+    }
+
+    @Override
+    public void analyzeIndex(String name) throws IOException {
+        elasticRequest.analyzeIndex(name);
+    }
 }

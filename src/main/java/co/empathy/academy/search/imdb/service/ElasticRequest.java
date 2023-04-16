@@ -22,4 +22,18 @@ public interface ElasticRequest {
      * @throws IOException fails if the index already exists.
      */
     void bulkIndexMovies(List<Movie> movies, String indexName) throws IOException;
+
+    /**
+     * Method that uses a json mapping file to map an index that we choose by its name.
+     * @param name name of the index we are going to map.
+     * @throws IOException fails if the index does not exist.
+     */
+    void mapIndex(String name) throws IOException;
+
+    /**
+     * Method that uses a json settings file to analyze an index that we choose by its name.
+     * @param name name of the index we are going to analyze.
+     * @throws IOException fails if the index does not exist.
+     */
+    void analyzeIndex(String name) throws IOException;
 }

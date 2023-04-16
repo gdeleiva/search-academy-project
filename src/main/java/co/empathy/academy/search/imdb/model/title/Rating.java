@@ -5,8 +5,8 @@ import co.empathy.academy.search.imdb.model.Title;
 public class Rating implements Title {
     // Contains the IMDb rating and votes information for titles:
     private String tconst; // tconst (string) - alphanumeric unique identifier of the title
-    private float averageRating; // averageRating – weighted average of all the individual user ratings
-    private int numVotes; // numVotes - number of votes the title has received
+    private float averageRating = 0; // averageRating – weighted average of all the individual user ratings
+    private int numVotes = 0; // numVotes - number of votes the title has received
 
     public Rating(String tconst, float averageRating, int numVotes) {
         this.tconst = tconst;

@@ -24,11 +24,12 @@ public class IndexServiceImpl implements IndexService{
         List<Movie> moviesBatch = new ArrayList<>();
         String indexName = "movies";
         elasticService.createIndex(indexName);
+        elasticService.analyzeIndex(indexName);
+        elasticService.mapIndex(indexName);
         do {
             moviesBatch.clear();
             moviesBatch = parser.parseData(MOVIE_BATCH_SIZE);
             elasticService.indexIMDbDocs(moviesBatch, indexName);
         } while (moviesBatch.size() == MOVIE_BATCH_SIZE);
-
     }
 }

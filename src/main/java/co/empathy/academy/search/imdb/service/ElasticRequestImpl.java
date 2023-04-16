@@ -15,6 +15,7 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class ElasticRequestImpl implements ElasticRequest{
@@ -51,5 +52,19 @@ public class ElasticRequestImpl implements ElasticRequest{
             );
         }
         BulkResponse bulkResponse = client.bulk(br.build());
+    }
+
+    @Override
+    public void mapIndex(String name) throws IOException {
+        InputStream map = getClass().getClassLoader().getResourceAsStream("mapping.json");
+        client.indices().putMapping(p -> p.index(name).withJson(map));
+    }
+
+    @Override
+    public void analyzeIndex(String name) throws IOException {
+        client.indices().close(c -> c.index(name));
+        InputStream analyzer = getClass().getClassLoader().getResourceAsStream("custom_analyzer.json");
+        client.indices().putSettings(p -> p.index(name).withJson(analyzer));
+        client.indices().open(o -> o.index(name));
     }
 }

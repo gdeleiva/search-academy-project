@@ -35,6 +35,7 @@ public class IndexController {
     @Parameter(name = "principals", description = "IMDb principals file with principal cast information")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Files uploaded succesfully.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid request, some file missing", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while reading the file", content = @Content)
     })
     @PostMapping(value = "", consumes = {"multipart/form-data"})

@@ -13,6 +13,7 @@ public class Principals implements Title {
     private String job; // job (string) - the specific job title if applicable, else '\N'
     private String [] characters; // characters (string) - the name of the character played if applicable, else '\N'
 
+    private PrincipalMember member;
     public Principals(String tconst, int ordering, String nconst, String category, String job, String[] characters) {
         this.tconst = tconst;
         this.ordering = ordering;
@@ -22,17 +23,21 @@ public class Principals implements Title {
         this.characters = characters;
     }
 
-    public Principals(String field, PrincipalMember principalMember, String[] characters) {
-        this.tconst = tconst;
-        this.ordering = ordering;
-        this.nconst = nconst;
-        this.category = category;
-        this.job = job;
+    public Principals(String id, PrincipalMember principalMember, String[] characters) {
+        this.tconst = id;
+        this.member = principalMember;
         this.characters = characters;
     }
 
     public String getTconst() {
         return tconst;
+    }
+
+    public PrincipalMember getMember() {
+        return member;
+    }
+    public void setMember(PrincipalMember member) {
+        this.member = member;
     }
 
     public void setTconst(String tconst) {

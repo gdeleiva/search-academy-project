@@ -146,7 +146,7 @@ public class IMDbParser {
             return new Movie(fields[0], fields[1], fields[2],
                     fields[3], parseBoolean(fields[4]),
                     parseInteger(fields[5]), parseInteger(fields[6]),
-                    parseInteger(fields[7]), parseStringArray(fields[8]));
+                    parseInteger(fields[7]), parseStringArray(fields[8]),prevRating.getAverageRating(), prevRating.getNumVotes());
         } else {
             return null;
         }
@@ -177,7 +177,7 @@ public class IMDbParser {
             String fields[] = line.split("\t");
             String category = fields[3];
             if (!category.equals("actor") && !category.equals("actress") && !category.equals("self")) {
-                return new Principals("None", null, null);
+                return new Principals("-1", null, null);
             } else {
                 String[] characters = fields[5].split(",");
                 return new Principals(fields[0], new PrincipalMember(fields[2]), characters);
