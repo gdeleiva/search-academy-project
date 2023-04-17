@@ -36,4 +36,8 @@ public interface ElasticRequest {
      * @throws IOException fails if the index does not exist.
      */
     void analyzeIndex(String name) throws IOException;
+
+    boolean doesIndexExists(String indexName) throws IOException;
+
+    void deleteIndex(String indexName) throws IOException;
 }

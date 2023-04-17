@@ -18,6 +18,9 @@ public class ElasticServiceImpl implements ElasticService{
 
     @Override
     public void createIndex(String indexName) throws IOException {
+        if (elasticRequest.doesIndexExists(indexName)) {
+            elasticRequest.deleteIndex(indexName);
+        }
         elasticRequest.createIndex(indexName);
     }
     @Override

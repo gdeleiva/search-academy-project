@@ -8,6 +8,8 @@ import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
 import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 import jakarta.annotation.PostConstruct;
@@ -66,5 +68,15 @@ public class ElasticRequestImpl implements ElasticRequest{
         InputStream analyzer = getClass().getClassLoader().getResourceAsStream("custom_analyzer.json");
         client.indices().putSettings(p -> p.index(name).withJson(analyzer));
         client.indices().open(o -> o.index(name));
+    }
+
+    @Override
+    public boolean doesIndexExists(String indexName) throws IOException {
+        return client.indices().exists(ExistsRequest.of(e -> e.index(indexName))).value();
+    }
+
+    @Override
+    public void deleteIndex(String indexName) throws IOException {
+        client.indices().delete(DeleteIndexRequest.of(d -> d.index(indexName)));
     }
 }

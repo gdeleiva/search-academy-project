@@ -8,13 +8,13 @@ public class Principals implements Title {
     // Contains the principal cast/crew for titles:
     private String tconst; // tconst (string) - alphanumeric unique identifier of the title
     private int ordering;  // ordering (integer) – a number to uniquely identify rows for a given titleId
-    private String nconst; // nconst (string) - alphanumeric unique identifier of the name/person
+    private PrincipalMember nconst; // nconst (string) - alphanumeric unique identifier of the name/person
     private String category; // category (string) - the category of job that person was in
     private String job; // job (string) - the specific job title if applicable, else '\N'
     private String [] characters; // characters (string) - the name of the character played if applicable, else '\N'
 
     private PrincipalMember member;
-    public Principals(String tconst, int ordering, String nconst, String category, String job, String[] characters) {
+    public Principals(String tconst, int ordering, PrincipalMember nconst, String category, String job, String[] characters) {
         this.tconst = tconst;
         this.ordering = ordering;
         this.nconst = nconst;
@@ -22,13 +22,6 @@ public class Principals implements Title {
         this.job = job;
         this.characters = characters;
     }
-
-    public Principals(String id, PrincipalMember principalMember, String[] characters) {
-        this.tconst = id;
-        this.member = principalMember;
-        this.characters = characters;
-    }
-
     public String getTconst() {
         return tconst;
     }
@@ -52,11 +45,11 @@ public class Principals implements Title {
         this.ordering = ordering;
     }
 
-    public String getNconst() {
+    public PrincipalMember getNconst() {
         return nconst;
     }
 
-    public void setNconst(String nconst) {
+    public void setNconst(PrincipalMember nconst) {
         this.nconst = nconst;
     }
 

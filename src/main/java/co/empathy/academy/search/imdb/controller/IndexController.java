@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/index")
 public class IndexController {
     @Autowired
     private IndexService indexService;

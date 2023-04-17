@@ -188,7 +188,7 @@ public class Movie {
     }
 
     public String getName(int i){
-        return this.starring.get(i).getNconst();
+        return this.starring.get(i).getNconst().getFullName();
     }
 
     public String[] getCharacters(int i){
