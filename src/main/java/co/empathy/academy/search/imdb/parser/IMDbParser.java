@@ -105,7 +105,7 @@ public class IMDbParser {
             // We do not want to add movies that have no votes nor Adult movies to our index.
             //System.out.println(moviesParsed);
             //System.out.println("  averageRating= " + movie.getAverageRating() + "  numberOfvotes= " + movie.getNumberOfVotes() + " movieIsAdult = " + movie.isAdult() );
-            if(!((movie.getAverageRating() == 0 && movie.getNumberOfVotes() == 0) || movie.isAdult()))
+            if(movieIsValid(movie))
             {
                 System.out.println("  averageRating= " + movie.getAverageRating() + "  numberOfvotes= " + movie.getNumberOfVotes() + " movieIsAdult = " + movie.isAdult() );
                 movies.add(movie);
@@ -119,6 +119,13 @@ public class IMDbParser {
         return  movies;
     }
 
+    private boolean movieIsValid(Movie m){
+        if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
+            return false;
+        if(m.isAdult())
+            return false;
+        return true;
+    }
     private List<Director> parseDirectors(String line) {
         if (line != null) {
             List<Director> result = new ArrayList<>();
