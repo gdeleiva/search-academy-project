@@ -5,6 +5,7 @@ import co.empathy.academy.search.imdb.model.response.PrincipalMember;
 import co.empathy.academy.search.imdb.model.title.Aka;
 import co.empathy.academy.search.imdb.model.title.Principals;
 import co.empathy.academy.search.imdb.model.title.Rating;
+import co.empathy.academy.search.imdb.util.Parser;
 
 import java.io.*;
 import java.util.*;
@@ -22,6 +23,7 @@ public class IMDbParser {
     private Principals prevPrincipal = null;
     private List<Director> prevDirectors = null;
     private String prevDirectorMovieId = null;
+    private Parser parser = new Parser();
 
     public IMDbParser(File basics, File akas, File ratings, File crew, File principals) throws FileNotFoundException {
         this.basicsReader = new BufferedReader(new FileReader(basics));
@@ -40,10 +42,10 @@ public class IMDbParser {
         principalsReader.readLine();
 
         //initialize data
-        prevAka = parseAka(akasReader.readLine());
-        prevRating = parseRating(ratingsReader.readLine());
+        prevAka = parser.parseAka(akasReader.readLine());
+        prevRating = parser.parseRating(ratingsReader.readLine());
         prevDirectors = parseDirectors(crewReader.readLine());
-        prevPrincipal = parsePrincipals(principalsReader.readLine());
+        prevPrincipal = parser.parsePrincipals(principalsReader.readLine());
     }
 
     private void closeReaders() throws IOException {
@@ -65,37 +67,37 @@ public class IMDbParser {
         while (moviesParsed < batchSize && (movieData = basicsReader.readLine()) != null) {
             List<Aka> akas = new ArrayList<>();
             List<Principals> starring = new ArrayList<>();
-            Movie movie = parseMovie(movieData);
+            Movie movie = parser.parseMovie(movieData, prevRating);
 
-            while (prevAka != null && lowerMovieID(prevAka.getTitleId(), movie.getTconst())) {
-                prevAka = parseAka(akasReader.readLine());
+            while (prevAka != null && parser.lowerMovieID(prevAka.getTitleId(), movie.getTconst())) {
+                prevAka = parser.parseAka(akasReader.readLine());
             }
             while (prevAka != null && prevAka.getTitleId().equals(movie.getTconst())) {
                 akas.add(prevAka);
-                prevAka = parseAka(akasReader.readLine());
+                prevAka = parser.parseAka(akasReader.readLine());
             }
             if (!akas.isEmpty()) {
                 movie.setAkas(akas);
             }
-            while (prevRating != null && lowerMovieID(prevRating.getTconst(), movie.getTconst())) {
-                prevRating = parseRating(ratingsReader.readLine());
+            while (prevRating != null && parser.lowerMovieID(prevRating.getTconst(), movie.getTconst())) {
+                prevRating = parser.parseRating(ratingsReader.readLine());
             }
             if (prevRating != null && prevRating.getTconst().equals(movie.getTconst())) {
                 movie.setAverageRating(prevRating.getAverageRating());
                 movie.setNumberOfVotes(prevRating.getNumVotes());
-                prevRating = parseRating(ratingsReader.readLine());
+                prevRating = parser.parseRating(ratingsReader.readLine());
             }
-            while (prevPrincipal != null && lowerMovieID(prevPrincipal.getTconst(), movie.getTconst())) {
-                prevPrincipal = parsePrincipals(principalsReader.readLine());
+            while (prevPrincipal != null && parser.lowerMovieID(prevPrincipal.getTconst(), movie.getTconst())) {
+                prevPrincipal = parser.parsePrincipals(principalsReader.readLine());
             }
             while (prevPrincipal != null && prevPrincipal.getTconst().equals(movie.getTconst())) {
                 starring.add(prevPrincipal);
-                prevPrincipal = parsePrincipals(principalsReader.readLine());
+                prevPrincipal = parser.parsePrincipals(principalsReader.readLine());
             }
             if (!starring.isEmpty()) {
                 movie.setStarring(starring);
             }
-            while (prevDirectors != null && lowerMovieID(prevDirectorMovieId, movie.getTconst())) {
+            while (prevDirectors != null && parser.lowerMovieID(prevDirectorMovieId, movie.getTconst())) {
                 prevDirectors = parseDirectors(crewReader.readLine());
             }
             if (prevDirectors != null && prevDirectorMovieId.equals(movie.getTconst())) {
@@ -103,11 +105,8 @@ public class IMDbParser {
                 prevDirectors = parseDirectors(crewReader.readLine());
             }
             // We do not want to add movies that have no votes nor Adult movies to our index.
-            //System.out.println(moviesParsed);
-            //System.out.println("  averageRating= " + movie.getAverageRating() + "  numberOfvotes= " + movie.getNumberOfVotes() + " movieIsAdult = " + movie.isAdult() );
             if(movieIsValid(movie))
             {
-                System.out.println("  averageRating= " + movie.getAverageRating() + "  numberOfvotes= " + movie.getNumberOfVotes() + " movieIsAdult = " + movie.isAdult() );
                 movies.add(movie);
             }
             moviesParsed++;
@@ -119,13 +118,6 @@ public class IMDbParser {
         return  movies;
     }
 
-    private boolean movieIsValid(Movie m){
-        if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
-            return false;
-        if(m.isAdult())
-            return false;
-        return true;
-    }
     private List<Director> parseDirectors(String line) {
         if (line != null) {
             List<Director> result = new ArrayList<>();
@@ -142,80 +134,11 @@ public class IMDbParser {
         }
     }
 
-    private Movie parseMovie(String line) {
-        if (line != null) {
-            String[] fields = line.split("\t");
-            return new Movie(fields[0], fields[1], fields[2],
-                    fields[3], parseBoolean(fields[4]),
-                    parseInteger(fields[5]), parseInteger(fields[6]),
-                    parseInteger(fields[7]), parseStringArray(fields[8]),prevRating.getAverageRating(), prevRating.getNumVotes());
-        } else {
-            return null;
-        }
-    }
-
-    private Rating parseRating(String line) {
-        if (line != null) {
-            String[] fields = line.split("\t");
-            return new Rating(fields[0], parseFloat(fields[1]),
-                    parseInteger(fields[2]));
-        } else {
-            return new Rating("-1", 0, 0);
-        }
-    }
-
-    private Aka parseAka(String line) {
-        if (line != null) {
-            String[] fields = line.split("\t");
-            String[] types= fields[5].split(",");
-            String[] attributes = fields[6].split(",");
-            return new Aka(fields[0], fields[2], fields[3], fields[4], types, attributes, parseBoolean(fields[7]));
-        } else {
-            return null;
-        }
-    }
-
-    private Principals parsePrincipals(String line) {
-        if (line != null) {
-            String[] fields = line.split("\t");
-            String category = fields[3];
-            if (!category.equals("actor") && !category.equals("actress") && !category.equals("self")) {
-                return new Principals("-1", -1, null,null,null,null);
-            } else {
-                String[] characters = fields[5].split(",");
-                return new Principals(fields[0], parseInteger(fields[1]), new PrincipalMember(fields[2]), fields[3], fields[4], characters);
-            }
-
-        } else {
-            return null;
-        }
-    }
-
-    private boolean lowerMovieID(String id1, String id2) {
-        return id1.compareTo(id2) < 0;
-    }
-
-    private boolean parseBoolean(String value) {
-        return value.equals("1");
-    }
-
-    private String[] parseStringArray(String stringArray) {
-        return stringArray.split(",");
-    }
-
-    private Integer parseInteger(String number) {
-        try {
-            return Integer.parseInt(number);
-        } catch (NumberFormatException ex) {
-            return -1;
-        }
-    }
-
-    private Float parseFloat(String number) {
-        try {
-            return Float.parseFloat(number);
-        } catch (NumberFormatException ex) {
-            return (float) -1.0;
-        }
+    private boolean movieIsValid(Movie m){
+        if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
+            return false;
+        if(m.isAdult())
+            return false;
+        return true;
     }
 }
