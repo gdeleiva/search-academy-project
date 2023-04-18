@@ -1,4 +1,8 @@
 # IMDB ACADEMY PROJECT
+## Introduction
+
+This is a backend proyect made to connect to a front end application that will allow users to search for specific movies that are inside the IMDB database.
+
 ## Installation
 1. Clone the repository in your machine
 ```
@@ -19,6 +23,15 @@ If you want to stop the application use the following command:
 docker compose down
 ```
 Sometimes elastic search wont stop and you will have to stop it from the docker app.
+
+## How to Index
+
+Send the tsv file infomration inside a form to this link with an app like Postman:
+
+```
+http://localhost:8080/index
+```
+
 
 ## Documentation
 Once the system is deployed, you can find all the API documentation here, there is also the javadoc documentation:
