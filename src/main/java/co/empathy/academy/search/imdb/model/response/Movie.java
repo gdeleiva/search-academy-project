@@ -28,13 +28,13 @@ public class Movie {
     public Movie() {}
 
     public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult, Integer startYear,
-                 Integer endYear, Integer runtimeMinutes, String[] genres) {
+                 Integer endYear, Integer runtimeMinutes, String[] genres, float averageRating, int numberOfVotes) {
         this(tconst, titleType, primaryTitle, originalTitle, new ArrayList<Aka>(), isAdult, startYear, endYear, runtimeMinutes,
-                genres, null);
+                genres, averageRating, numberOfVotes);
     }
 
     public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, List<Aka> akas,
-                 boolean isAdult, Integer startYear, Integer endYear, Integer runtimeMinutes, String[] genres, Rating rating) {
+                 boolean isAdult, Integer startYear, Integer endYear, Integer runtimeMinutes, String[] genres, float averageRating, int numberOfVotes) {
         this.tconst = tconst;
         this.titleType = titleType;
         this.primaryTitle = primaryTitle;
@@ -45,8 +45,8 @@ public class Movie {
         this.endYear = endYear;
         this.runtimeMinutes = runtimeMinutes;
         this.genres = genres;
-        this.averageRating = rating.getAverageRating();
-        this.numberOfVotes = rating.getNumVotes();
+        this.averageRating = averageRating;
+        this.numberOfVotes = numberOfVotes;
         this.featured = false;
         this.watched = false;
     }
@@ -188,7 +188,7 @@ public class Movie {
     }
 
     public String getName(int i){
-        return this.starring.get(i).getNconst();
+        return this.starring.get(i).getNconst().getFullName();
     }
 
     public String[] getCharacters(int i){

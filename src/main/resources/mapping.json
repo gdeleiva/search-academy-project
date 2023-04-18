@@ -1,0 +1,47 @@
+{
+  "properties": {
+    "tconst": {
+      "type": "keyword"
+    },
+    "titleType": {
+      "type": "keyword"
+    },
+    "primaryTitle": {
+      "type": "text",
+      "fields": {
+        "raw": {
+          "type": "keyword"
+        }
+      }
+    },
+    "originalTitle": {
+      "type": "text",
+      "fields": {
+        "raw": {
+          "type": "keyword"
+        }
+      }
+    },
+    "isAdult": {
+      "type": "boolean"
+    },
+    "startYear": {
+      "type": "integer"
+    },
+    "endYear": {
+      "type": "integer"
+    },
+    "runtimeMinutes": {
+      "type": "integer"
+    },
+    "genres": {
+      "type": "keyword"
+    },
+    "averageRating": {
+      "type": "double"
+    },
+    "numVotes": {
+      "type": "integer"
+    }
+  }
+}

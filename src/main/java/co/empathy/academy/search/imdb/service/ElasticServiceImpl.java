@@ -18,10 +18,23 @@ public class ElasticServiceImpl implements ElasticService{
 
     @Override
     public void createIndex(String indexName) throws IOException {
+        if (elasticRequest.doesIndexExists(indexName)) {
+            elasticRequest.deleteIndex(indexName);
+        }
         elasticRequest.createIndex(indexName);
     }
     @Override
     public void indexIMDbDocs(List<Movie> movies, String indexName) throws IOException {
         elasticRequest.bulkIndexMovies(movies, indexName);
+    }
+
+    @Override
+    public void mapIndex(String name) throws IOException {
+        elasticRequest.mapIndex(name);
+    }
+
+    @Override
+    public void analyzeIndex(String name) throws IOException {
+        elasticRequest.analyzeIndex(name);
     }
 }
