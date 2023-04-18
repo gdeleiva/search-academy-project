@@ -1,7 +1,6 @@
 package co.empathy.academy.search.imdb.parser;
 import co.empathy.academy.search.imdb.model.response.Director;
 import co.empathy.academy.search.imdb.model.response.Movie;
-import co.empathy.academy.search.imdb.model.response.PrincipalMember;
 import co.empathy.academy.search.imdb.model.title.Aka;
 import co.empathy.academy.search.imdb.model.title.Principals;
 import co.empathy.academy.search.imdb.model.title.Rating;
@@ -12,7 +11,6 @@ import java.util.*;
 public class IMDbParser {
 
     private int batchNumber = 0;
-
     private final BufferedReader basicsReader;
     private final BufferedReader akasReader;
     private final BufferedReader ratingsReader;
@@ -23,7 +21,7 @@ public class IMDbParser {
     private Principals prevPrincipal = null;
     private List<Director> prevDirectors = null;
     private String prevDirectorMovieId = null;
-    private Parser parser = new Parser();
+    private final Parser parser = new Parser();
 
     public IMDbParser(File basics, File akas, File ratings, File crew, File principals) throws FileNotFoundException {
         this.basicsReader = new BufferedReader(new FileReader(basics));
@@ -137,8 +135,6 @@ public class IMDbParser {
     private boolean movieIsValid(Movie m){
         if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
             return false;
-        if(m.isAdult())
-            return false;
-        return true;
+        return !m.isAdult();
     }
 }
