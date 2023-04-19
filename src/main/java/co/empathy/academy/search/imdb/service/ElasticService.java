@@ -1,5 +1,9 @@
 package co.empathy.academy.search.imdb.service;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.json.JsonData;
+import co.empathy.academy.search.imdb.model.AcademySearchResponse;
 import co.empathy.academy.search.imdb.model.response.Movie;
 
 import java.io.IOException;
@@ -34,4 +38,6 @@ public interface ElasticService {
      * @throws IOException fails if the index does not exist.
      */
     void analyzeIndex(String name) throws IOException;
+
+    List<Object> executeQuery(String indexName, Query query, Integer maxNumber, List<SortOptions> sortOptions) throws IOException;
 }
