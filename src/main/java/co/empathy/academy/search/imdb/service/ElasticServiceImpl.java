@@ -4,8 +4,6 @@ package co.empathy.academy.search.imdb.service;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.json.JsonData;
-import co.empathy.academy.search.imdb.model.AcademySearchResponse;
 import co.empathy.academy.search.imdb.model.response.Movie;
 import org.springframework.stereotype.Service;
 

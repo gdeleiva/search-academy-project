@@ -26,8 +26,8 @@ public class IndexServiceImpl implements IndexService{
         elasticService.mapIndex(indexName);
         do {
             moviesBatch.clear();
-            moviesBatch = parser.parseData(20000);
+            moviesBatch = parser.parseData(30000);
             elasticService.indexIMDbDocs(moviesBatch, indexName);
-        } while (moviesBatch.size() == 20000);
+        } while (moviesBatch.size() == 30000);
     }
 }
