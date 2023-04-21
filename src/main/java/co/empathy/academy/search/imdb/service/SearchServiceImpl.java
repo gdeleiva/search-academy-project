@@ -20,9 +20,7 @@ public class SearchServiceImpl implements SearchService{
 
     @Override
     public List<Object> getAllMovies(String indexName, String tittle) throws IOException {
-        Query query = queriesService.matchAllQuery(indexName, tittle);
-        System.out.println("query llegamos");
-        System.out.println(query);
+        Query query = queriesService.rangeQuery("averageRating", (float) 8, (float) 10);
         List<SortOptions> sortOptions = new ArrayList<>();
         return elasticService.executeQuery(indexName, query, 100, sortOptions);
     }
