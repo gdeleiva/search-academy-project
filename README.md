@@ -59,5 +59,5 @@ the process and adapted it to my proyect.
 ```
 Queries:
 ```
-lots of the queries and the overall query process was done with huge help from Pepe Pérez.
+Lots of the queries and the overall query process was done with huge help from Pepe Pérez.
  
