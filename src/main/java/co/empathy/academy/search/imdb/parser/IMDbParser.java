@@ -105,10 +105,9 @@ public class IMDbParser {
             // We do not want to add movies that have no votes nor Adult movies to our index.
             if(movieIsValid(movie))
             {
-                System.out.println("rating: " + movie.getAverageRating() + "  averageNumberOfVotes: " + movie.getNumberOfVotes());
                 movies.add(movie);
+                moviesParsed++;
             }
-            moviesParsed++;
         }
         batchNumber++;
         if (movieData == null) {
@@ -137,5 +136,10 @@ public class IMDbParser {
         if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
             return false;
         return !m.isAdult();
+    }
+
+
+    public int getBatchNumber(){
+        return batchNumber;
     }
 }

@@ -89,13 +89,13 @@ public class ElasticRequestImpl implements ElasticRequest{
                     client.search(i -> i
                             .index(indexName)
                             .query(query)
+                            .sort(sortOptions)
                             .size(size), Object.class);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        System.out.println(response);
         List<Object> hits = response.hits().hits().stream().map(Hit::source).toList();
         return hits;
     }

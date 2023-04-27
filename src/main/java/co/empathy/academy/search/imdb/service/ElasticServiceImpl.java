@@ -42,7 +42,6 @@ public class ElasticServiceImpl implements ElasticService{
 
     @Override
     public List<Object> executeQuery(String indexName, Query query, Integer maxNumber, List<SortOptions> sortOptions) throws IOException {
-        System.out.println("llegamos");
         return elasticRequest.executeQuery(indexName, query, maxNumber, sortOptions);
     }
 }

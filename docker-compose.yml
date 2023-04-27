@@ -1,15 +1,15 @@
 version: "3"
 services:
   elasticsearch:
-      image: "guillermoleiva/elasticsearchimdb:test"
-      hostname: "elasticsearch"
-      container_name: elasticsearch-docker
-      environment:
+    image: "guillermoleiva/elasticsearchimdb:test"
+    hostname: "elasticsearch"
+    container_name: elasticsearch-docker
+    environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - http.cors.enabled=true
       - http.cors.allow-origin=https://app.elasticvue.com, http://cerebro:9000
-      ports:
+    ports:
       - 9200:9200
   cerebro:
     image: lmenezes/cerebro
@@ -20,8 +20,8 @@ services:
   springbootapp:
     container_name: springbootapp
     build:
-        context: .
-        dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
       - 8000:8000
