@@ -51,7 +51,9 @@ http://localhost:9000
 
 ## Code Sources and Help
  
-Indexing: The base part of the indexing process of the code was taken from Laura Pernía´s repository, after that changes were made to improve
+```Indexing:``` 
+The base part of the indexing process of the code was taken from Laura Pernía´s repository, after that changes were made to improve
 the process and adapted it to my proyect.
-Queries: lots of the queries and the overall query process was done with huge help from Pepe Pérez.
+```Queries:```
+lots of the queries and the overall query process was done with huge help from Pepe Pérez.
  
