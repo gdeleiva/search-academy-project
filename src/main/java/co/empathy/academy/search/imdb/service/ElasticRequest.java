@@ -39,8 +39,19 @@ public interface ElasticRequest {
      */
     void analyzeIndex(String name) throws IOException;
 
+    /**
+     * Method that tests if the index exists.
+     * @param indexName name of the index we are going to check.
+     * @return true if it exists.
+     * @throws IOException
+     */
     boolean doesIndexExists(String indexName) throws IOException;
 
+    /**
+     * Method that deletes the index we give it if it exists.
+     * @param indexName
+     * @throws IOException
+     */
     void deleteIndex(String indexName) throws IOException;
     /**
      * Sends the given query to ElasticSearch so it is executed in the specified index. Given that there are more

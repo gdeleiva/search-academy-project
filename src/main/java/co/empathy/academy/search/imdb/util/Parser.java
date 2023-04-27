@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Parser {
 
+
     public Movie parseMovie(String line, Rating prevRating) {
         if (line != null) {
             String[] fields = line.split("\t");
