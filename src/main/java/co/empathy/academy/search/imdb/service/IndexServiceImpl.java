@@ -12,8 +12,6 @@ import java.io.IOException;
 
 @Service
 public class IndexServiceImpl implements IndexService{
-    private final static int MOVIE_BATCH_SIZE = 20000;
-
     @Autowired
     private ElasticService elasticService;
 
@@ -28,8 +26,8 @@ public class IndexServiceImpl implements IndexService{
         elasticService.mapIndex(indexName);
         do {
             moviesBatch.clear();
-            moviesBatch = parser.parseData(MOVIE_BATCH_SIZE);
+            moviesBatch = parser.parseData(20000);
             elasticService.indexIMDbDocs(moviesBatch, indexName);
-        } while (moviesBatch.size() == MOVIE_BATCH_SIZE);
+        } while (moviesBatch.size() == 20000); //&& parser.getBatchNumber() < 100);
     }
 }

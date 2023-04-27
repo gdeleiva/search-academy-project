@@ -34,7 +34,7 @@ public class SearchExceptionHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(FileReadingException.class)
     protected ResponseEntity<Object> handleInvalidFileData(FileReadingException ex, WebRequest request) {
-        String body = "Failed to upload file";
+        String body = "Date not found";
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

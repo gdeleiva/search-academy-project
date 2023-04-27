@@ -3,11 +3,12 @@ package co.empathy.academy.search.imdb.model.response;
 import co.empathy.academy.search.imdb.model.title.Aka;
 import co.empathy.academy.search.imdb.model.title.Principals;
 import co.empathy.academy.search.imdb.model.title.Rating;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie {
     private String tconst;
     private String titleType;
@@ -29,12 +30,15 @@ public class Movie {
 
     public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult, Integer startYear,
                  Integer endYear, Integer runtimeMinutes, String[] genres, float averageRating, int numberOfVotes) {
-        this(tconst, titleType, primaryTitle, originalTitle, new ArrayList<Aka>(), isAdult, startYear, endYear, runtimeMinutes,
-                genres, averageRating, numberOfVotes);
+        this(tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes,
+                genres, averageRating, numberOfVotes,new ArrayList<Aka>(), null, null,
+                false, false);
     }
 
-    public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, List<Aka> akas,
-                 boolean isAdult, Integer startYear, Integer endYear, Integer runtimeMinutes, String[] genres, float averageRating, int numberOfVotes) {
+    public Movie(String tconst, String titleType, String primaryTitle, String originalTitle, boolean isAdult,
+                 Integer startYear, Integer endYear, Integer runtimeMinutes, String[] genres, float averageRating,
+                 int numberOfVotes, List<Aka> akas, List<Director> directors, List<Principals> principals,
+                 boolean featured, boolean watched){
         this.tconst = tconst;
         this.titleType = titleType;
         this.primaryTitle = primaryTitle;
@@ -47,8 +51,10 @@ public class Movie {
         this.genres = genres;
         this.averageRating = averageRating;
         this.numberOfVotes = numberOfVotes;
-        this.featured = false;
-        this.watched = false;
+        this.featured = featured;
+        this.watched = watched;
+        this.directors = directors;
+        this.starring = principals;
     }
 
     public String getTconst() {

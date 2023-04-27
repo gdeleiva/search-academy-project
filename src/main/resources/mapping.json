@@ -42,6 +42,10 @@
     },
     "numVotes": {
       "type": "integer"
+    },"featured": {
+      "type": "boolean"
+    },"watched": {
+      "type": "boolean"
     }
   }
 }

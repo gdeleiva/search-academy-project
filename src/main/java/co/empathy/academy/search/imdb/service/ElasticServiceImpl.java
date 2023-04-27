@@ -2,6 +2,8 @@ package co.empathy.academy.search.imdb.service;
 
 
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.empathy.academy.search.imdb.model.response.Movie;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +38,10 @@ public class ElasticServiceImpl implements ElasticService{
     @Override
     public void analyzeIndex(String name) throws IOException {
         elasticRequest.analyzeIndex(name);
+    }
+
+    @Override
+    public List<Object> executeQuery(String indexName, Query query, Integer maxNumber, List<SortOptions> sortOptions) throws IOException {
+        return elasticRequest.executeQuery(indexName, query, maxNumber, sortOptions);
     }
 }

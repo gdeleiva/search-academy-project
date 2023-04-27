@@ -1,5 +1,7 @@
 package co.empathy.academy.search.imdb.service;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.empathy.academy.search.imdb.model.response.Movie;
 
 import java.io.IOException;
@@ -37,7 +39,31 @@ public interface ElasticRequest {
      */
     void analyzeIndex(String name) throws IOException;
 
+    /**
+     * Method that tests if the index exists.
+     * @param indexName name of the index we are going to check.
+     * @return true if it exists.
+     * @throws IOException
+     */
     boolean doesIndexExists(String indexName) throws IOException;
 
+    /**
+     * Method that deletes the index we give it if it exists.
+     * @param indexName
+     * @throws IOException
+     */
     void deleteIndex(String indexName) throws IOException;
+    /**
+     * Sends the given query to ElasticSearch so it is executed in the specified index. Given that there are more
+     * than size of results, only the first size are returned. Results are sorted according to sortOptions.
+     * Result is returned wrapped in a AcademySearchResponse, that contains hits and facets.
+     * @param indexName
+     * @param query
+     * @param size
+     * @param sortOptions
+     * @return
+     * @throws IOException
+     */
+    List<Object> executeQuery(String indexName, Query query, int size, List<SortOptions> sortOptions);
+
 }

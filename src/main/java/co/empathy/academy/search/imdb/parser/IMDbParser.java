@@ -31,6 +31,10 @@ public class IMDbParser {
         this.principalsReader = new BufferedReader(new FileReader(principals));
     }
 
+    /**
+     * Method used to initialize the readers for the indexing process.
+     * @throws IOException
+     */
     private void initializeData() throws IOException {
         //skip headers
         basicsReader.readLine();
@@ -46,6 +50,10 @@ public class IMDbParser {
         prevPrincipal = parser.parsePrincipals(principalsReader.readLine());
     }
 
+    /**
+     * Method to close readers after the indexing processs is done
+     * @throws IOException
+     */
     private void closeReaders() throws IOException {
         basicsReader.close();
         akasReader.close();
@@ -54,6 +62,12 @@ public class IMDbParser {
         principalsReader.close();
     }
 
+    /**
+     * Method to index tsv data in the class movie
+     * @param batchSize number of movies we are parsing before going to the next batch
+     * @return list of parsed movies.
+     * @throws IOException
+     */
     public List<Movie> parseData(int batchSize) throws IOException {
         List<Movie> movies = new ArrayList<>();
         String movieData = null;
@@ -106,8 +120,8 @@ public class IMDbParser {
             if(movieIsValid(movie))
             {
                 movies.add(movie);
+                moviesParsed++;
             }
-            moviesParsed++;
         }
         batchNumber++;
         if (movieData == null) {
@@ -116,6 +130,11 @@ public class IMDbParser {
         return  movies;
     }
 
+    /**
+     * Method to parse directors
+     * @param line
+     * @return
+     */
     private List<Director> parseDirectors(String line) {
         if (line != null) {
             List<Director> result = new ArrayList<>();
@@ -132,9 +151,19 @@ public class IMDbParser {
         }
     }
 
+    /**
+     * Method that tests if the movie is not adult and it has more than 0 votes and 0 averageRating
+     * @param m
+     * @return
+     */
     private boolean movieIsValid(Movie m){
         if(m.getNumberOfVotes()==0 && m.getAverageRating() == 0)
             return false;
         return !m.isAdult();
+    }
+
+
+    public int getBatchNumber(){
+        return batchNumber;
     }
 }
