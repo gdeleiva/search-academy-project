@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public interface SearchAPI {
             @ApiResponse(responseCode = "400", description = "We couldnt find the list", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while searching for the documents", content = @Content)
     })
-    @GetMapping(path = "/filter1")
+    @PostMapping(path = "/filter1")
     ResponseEntity<List<Object>> filter(@RequestParam String name,
                                         @RequestParam String titleType) throws IOException;
 
@@ -46,7 +47,7 @@ public interface SearchAPI {
             @ApiResponse(responseCode = "400", description = "We couldnt find the list", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while searching for the documents", content = @Content)
     })
-    @GetMapping(path = "/filter2")
+    @PostMapping(path = "/filter2")
     ResponseEntity<List<Object>> filter(@RequestParam String name,
                                         @RequestParam String titleType,
                                         @RequestParam String[]genres) throws IOException;
@@ -62,7 +63,7 @@ public interface SearchAPI {
             @ApiResponse(responseCode = "400", description = "We couldnt find the list", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while searching for the documents", content = @Content)
     })
-    @GetMapping(path = "/filter3")
+    @PostMapping(path = "/filter3")
     ResponseEntity<List<Object>> filter(@RequestParam String name,
                                         @RequestParam String titleType,
                                         @RequestParam int max,
@@ -80,7 +81,7 @@ public interface SearchAPI {
             @ApiResponse(responseCode = "400", description = "We couldnt find the list", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while searching for the documents", content = @Content)
     })
-    @GetMapping(path = "/filter4")
+    @PostMapping(path = "/filter4")
     ResponseEntity<List<Object>> filter(@RequestParam String name,
                                         @RequestParam String titleType,
                                         @RequestParam String[] genres,
@@ -96,7 +97,6 @@ public interface SearchAPI {
             @ApiResponse(responseCode = "400", description = "We couldnt find the list", content = @Content),
             @ApiResponse(responseCode = "500", description = "Unexpected problem  while searching for the documents", content = @Content)
     })
-    @GetMapping(path = "/findr",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<Object>> findr(String titleType, List<String[]> list) throws IOException;
+    @PostMapping(path = "/findr")
+    ResponseEntity<List<Object>> findr(String titleType, String[] list) throws IOException;
 }

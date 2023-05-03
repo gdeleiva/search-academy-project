@@ -35,14 +35,14 @@ public class SearchController implements SearchAPI{
         return ResponseEntity.ok(searchResponse);
     }
 
-    @GetMapping(path = "/filter1")
+    @PostMapping(path = "/filter1")
     public ResponseEntity<List<Object>> filter(@RequestParam String name,
                                                @RequestParam String titleType) throws IOException {
         List<Object> searchResponse = searchService.getAllFiltered("movies",name, titleType);
         return ResponseEntity.ok(searchResponse);
     }
 
-    @GetMapping(path = "/filter2")
+    @PostMapping(path = "/filter2")
     public ResponseEntity<List<Object>> filter(@RequestParam String name,
                                                @RequestParam String titleType,
                                                @RequestParam String[]genres) throws IOException {
@@ -50,7 +50,7 @@ public class SearchController implements SearchAPI{
         return ResponseEntity.ok(searchResponse);
     }
 
-    @GetMapping(path = "/filter3")
+    @PostMapping(path = "/filter3")
     public ResponseEntity<List<Object>> filter(@RequestParam String name,
                                                @RequestParam String titleType,
                                                @RequestParam int max,
@@ -59,7 +59,7 @@ public class SearchController implements SearchAPI{
         return ResponseEntity.ok(searchResponse);
     }
 
-    @GetMapping(path = "/filter4")
+    @PostMapping(path = "/filter4")
     public ResponseEntity<List<Object>> filter(@RequestParam String name,
                                                @RequestParam String titleType,
                                                @RequestParam String[] genres,
@@ -69,10 +69,9 @@ public class SearchController implements SearchAPI{
         return ResponseEntity.ok(searchResponse);
     }
 
-    @GetMapping(path = "/findr",
-    consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/findr")
     public ResponseEntity<List<Object>> findr(@RequestParam String titleType,
-                                              @RequestParam List<String[]> list) throws IOException {
+                                              @RequestParam String[] list) throws IOException {
         FindrResponse findr = new FindrResponse(list);
         List<Object> searchResponse = searchService.getAllFindr("movies", titleType, findr.getGenres(), findr.getDirectors());
         return ResponseEntity.ok(searchResponse);

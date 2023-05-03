@@ -151,13 +151,15 @@ public class SearchServiceImpl implements SearchService{
     @Override
     public List<Object> getAllFiltered(String indexName, String name, String titleType, String[] genres, int max, int min) throws IOException {
         List<Query> queries = new ArrayList<>();
+        String[] gen  = {"Comedy","Adventure","Drama"};
         queries.add(queriesService.queryForStringValues("titleType", titleType));
         queries.add(queriesService.queryForTitles("primaryTitle", name));
         queries.add(queriesService.queryForFloatRanges("averageRating", (float) min, (float) max));
         if(titleType.equals("movie"))
             queries.add(queriesService.queryForIntRanges("numberOfVotes", 200000, Integer.MAX_VALUE));
         else
-            queries.add(queriesService.queryForIntRanges("numberOfVotes", 100000, Integer.MAX_VALUE));        queries.add(queriesService.queryForMultipleStringValues(genres, "genres"));
+            queries.add(queriesService.queryForIntRanges("numberOfVotes", 100000, Integer.MAX_VALUE));
+        queries.add(queriesService.queryForMultipleStringValues(genres, "genres"));
         Query query = queriesService.queryForMultipleQueriesTogether(queries);
         List<SortOptions> sortOptions = new ArrayList<>();
         sortOptions.add(queriesService.sortByAverageRating());
@@ -177,19 +179,20 @@ public class SearchServiceImpl implements SearchService{
     @Override
     public List<Object> getAllFindr(String indexName, String titleType, String[] genres, String[] directors) throws IOException {
         List<Query> queries = new ArrayList<>();
-        List<Object> total = new ArrayList<>();
+        String[] gen = {"Comedy", "Adventure", "Drama"};
+        if(titleType.equals("movie"))
         queries.add(queriesService.queryForStringValues("titleType", titleType));
-        queries.add(queriesService.queryForMultipleStringValues(genres, "genres"));
+        queries.add(queriesService.queryForMultipleStringValues(gen, "genres"));
         if(titleType.equals("movie"))
             queries.add(queriesService.queryForIntRanges("numberOfVotes", 200000, Integer.MAX_VALUE));
         else
-            queries.add(queriesService.queryForIntRanges("numberOfVotes", 100000, Integer.MAX_VALUE));        Query query = queriesService.queryForMultipleQueriesTogether(queries);
+            queries.add(queriesService.queryForIntRanges("numberOfVotes", 100000, Integer.MAX_VALUE));
+        Query query = queriesService.queryForMultipleQueriesTogether(queries);
         List<SortOptions> sortOptions = new ArrayList<>();
         sortOptions.add(queriesService.sortByAverageRating());
         sortOptions.add(queriesService.sortByNumberOfVotes());
-        total.addAll(elasticService.executeQuery(indexName, queriesService.queryForMultipleStringValues(genres, "directors.fullName"), 10, sortOptions));
-        total.addAll(elasticService.executeQuery(indexName, query, 100, sortOptions));
-        return total;
+        //total.addAll(elasticService.executeQuery(indexName, queriesService.queryForMultipleStringValues(genres, "directors.fullName"), 10, sortOptions));
+        return elasticService.executeQuery(indexName, query, 100, sortOptions);
     }
 
 
