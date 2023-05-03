@@ -8,8 +8,8 @@ public class FindrResponse {
     String[] directors;
     List<Swipe> swipes;
 
-    List<String[]> data = new ArrayList<>();
-    public FindrResponse(List<String[]> data){
+    String[] data;
+    public FindrResponse(String[] data){
         this.data = data;
         genres = new String[10];
         directors = new String[10];
@@ -30,15 +30,15 @@ public class FindrResponse {
 
     public void calculateFndr(){
         int position = 0;
-        for(String[] s: data)
+        for(int i=0; i<20;i+=4)
         {
-            if(s[3].equals(Swipe.LIKE)){
-                genres[position] = s[1];
+            if(data[i+3].equals(Swipe.LIKE)){
+                genres[position] = data[1];
                 position++;
             }
-            if(s[3].equals(Swipe.Superlike)){
-                genres[position] = s[1];
-                directors[position] = s[2];
+            if(data[i+3].equals(Swipe.Superlike)){
+                genres[position] = data[1];
+                directors[position] = data[2];
                 position++;
             }
         }
